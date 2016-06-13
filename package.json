@@ -2,7 +2,7 @@
   "name": "decoded-express-auth",
   "version": "0.0.1",
   "description": "Authentication middleware for Decoded's Express-based applications",
-  "main": "index.js",
+  "main": "auth.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
