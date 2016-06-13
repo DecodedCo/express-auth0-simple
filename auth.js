@@ -26,7 +26,7 @@ var OPTIONS = {
   failureRedirect: '/'
 };
 
-var overrideOptions = function (defaults, overrides) {
+var overrideOptions = function (overrides) {
   /*
    * Given an object of keys which should be replaced in the global config
    * object, replace these keys. Do this up to two levels' depth.
