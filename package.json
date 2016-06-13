@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/DecodedCo/decoded-express-auth/issues"
   },
-  "homepage": "https://github.com/DecodedCo/decoded-express-auth#readme"
+  "homepage": "https://github.com/DecodedCo/decoded-express-auth#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express-session": "^1.13.0",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.5.1"
+  }
 }
