@@ -83,7 +83,9 @@ var authCallbackHandler = function (req, res) {
  */
 exports.init = function (app, options) {
   // override any options that were specified
+  console.log(options);
   overrideOptions(options);
+  console.log(OPTIONS);
   // build auth0 passportjs strategy
   var strategy = new Auth0Strategy(OPTIONS.auth0, verifyCallback);
   passport.use(strategy);
