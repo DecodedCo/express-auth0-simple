@@ -117,7 +117,7 @@ exports.init = function (app, options) {
 // Use this middleware to protect one or more routes from access without auth
 exports.requiresLogin = function (req, res, next) {
   if (!req.isAuthenticated()) {
-    return res.redirect(OPTIONS.auth0.callbackUrl);
+    return res.redirect(OPTIONS.auth0.callbackURL);
   }
   next();
 }
