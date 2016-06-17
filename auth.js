@@ -38,7 +38,7 @@ var overrideOptions = function (overrides) {
       if (typeof OPTIONS[key] === 'object') {
         var subKeys = Object.keys(OPTIONS[key]);
         for (var j = 0; j < subKeys.length; j++) {
-          var subKey = subKeys[i];
+          var subKey = subKeys[j];
           if (subKey in overrides[key]) {
             OPTIONS[key][subKey] = overrides[key][subKey];
           }
