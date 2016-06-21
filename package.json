@@ -10,7 +10,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com/DecodedCo/decoded-express-auth.git"
   },
-  "author": "Joshua Saxby <josh@decoded.com> (https://decoded.com/)",
+  "author": "Decoded Developers <dev@decoded.com> (https://decoded.com/)",
+  "contributors": [
+    "Joshua Saxby <josh@decoded.com> (https://github.com/saxbophone)"
+  ],
   "license": "SEE LICENSE IN <LICENSE>",
   "bugs": {
     "url": "https://github.com/DecodedCo/decoded-express-auth/issues"
