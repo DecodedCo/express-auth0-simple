@@ -85,7 +85,8 @@ var options = {
     clientSecret: 'client_secret_super_super_secret!', // same as above
     callbackURL: '/callback' // this can be customised and must match what is set in Auth0
   },
-  cookieSecret: 'cookiesRkuhl', // You won't need to override this for most purposes (default is a random uuid)
+  // You won't need to override this for most purposes (default is a random uuid)
+  cookieSecret: 'cookiesRkuhl',
   successRedirect: '/', // URL to redirect to on successful authentication
   failureRedirect: '/auth-fail' // URL to redirect to on failed authentication
 }
