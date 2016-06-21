@@ -80,13 +80,13 @@ When initialising the middleware, the second argument to the `init()` function s
 ```js
 var options = {
   auth0: {
-    domain: 'yourdomain.eu.auth0.com',
-    clientID: 'client_id_super_secret',
-    clientSecret: 'client_secret_super_super_secret!',
-    callbackURL: '/callback'
+    domain: 'yourdomain.eu.auth0.com', // this can be found in your Auth0 dashboard/app config
+    clientID: 'client_id_super_secret', // same as above
+    clientSecret: 'client_secret_super_super_secret!', // same as above
+    callbackURL: '/callback' // this can be customised and must match what is set in Auth0
   },
-  cookieSecret: 'cookiesRkuhl',
-  successRedirect: '/',
-  failureRedirect: '/auth-fail'
+  cookieSecret: 'cookiesRkuhl', // You won't need to override this for most purposes (default is a random uuid)
+  successRedirect: '/', // URL to redirect to on successful authentication
+  failureRedirect: '/auth-fail' // URL to redirect to on failed authentication
 }
 ```
