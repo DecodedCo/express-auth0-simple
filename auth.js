@@ -21,7 +21,7 @@ var OPTIONS = {
     domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL: '/callback'
+    callbackURL: '/auth/callback'
   },
   cookieSecret: uuid.v4(),
   successRedirect: '/',
