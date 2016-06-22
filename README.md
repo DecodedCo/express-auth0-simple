@@ -34,12 +34,7 @@ Having installed the package and/or added it as a dependency to your project, yo
 var decodedAuth = require('decoded-express-auth'); // Import the middleware library
 
 // inititalise decodedAuth
-decodedAuth.init(
-  app, // Pass in your express app instance here
-  {
-    failureRedirect: '/failed' // Pass in any other config options here, these are explained below
-  }
-);
+decodedAuth.init(app); // Pass in your express app instance here
 ```
 
 Use the `requiresLogin` middleware provided by this app whenever you have one or more URL routes you want to be protected behind Auth0 authentication. Attempting to access any of the routes using this middleware will redirect the user to Auth0 to login first before allowing them to continue:
@@ -62,20 +57,21 @@ app.get('/my-fab-route', decodedAuth.requiresLogin, function(req,res) {
 
 ### Environment Variables
 
-So that your app can authenticate with Auth0, you'll need to provide your Auth0 account credentials. You need to provide your **Auth0 Client ID** and your **Auth0 Client Secret**. These values differ from app to app and you can find the values for your app in its settings page in the dashboard.
+So that your app can authenticate with Auth0, you'll need to provide your Auth0 account credentials. You need to provide your **Auth0 Client ID**, your **Auth0 Client Secret** and your **Auth0 Domain**. These values differ from app to app and you can find the values for your app in its settings page in the dashboard.
 
 The best way of supplying these credentials to your app is via environment variables and this package will do that by default. Make sure the following environment variables have been set and are accessible to the process running the app:
 
 ```sh
 export AUTH0_CLIENT_ID='your_client_id';
 export AUTH0_CLIENT_SECRET='your_client_secret';
+export AUTH0_DOMAIN='companyltd.eu.auth0.com';
 ```
 
 If you **really need to**, you can set these values via the options argument when initialising the middleware, but if you are doing this, you **MUST** make sure that these are not stored in source code!
 
 ### Options Object
 
-When initialising the middleware, the second argument to the `init()` function should be an object. This can optionally include options that override some configuration parameters of the middleware. Shown here is a full options object with every key populated, but note that each key is optional and will take the default for that argument if not given:
+When initialising the middleware, you can optionally provide a second argument to the `init()` function - this should be an object. This can include options that override some configuration parameters of the middleware. Shown here is a full options object with every key populated, but note that each key is optional and will take the default for that argument if not given:
 
 ```js
 var options = {

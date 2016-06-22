@@ -12,11 +12,13 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 // used for generating uuid for cookie secret
 var uuid = require('node-uuid');
+// for overriding options object
+var merge = require('merge');
 
 // global module default config object
 var OPTIONS = {
   auth0: {
-    domain: 'decoded.eu.auth0.com',
+    domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL: '/callback'
@@ -25,30 +27,6 @@ var OPTIONS = {
   successRedirect: '/',
   failureRedirect: '/'
 };
-
-var overrideOptions = function (overrides) {
-  /*
-   * Given an object of keys which should be replaced in the global config
-   * object, replace these keys. Do this up to two levels' depth.
-   */
-  var keys = Object.keys(OPTIONS);
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    if (key in overrides) {
-      if (typeof OPTIONS[key] === 'object') {
-        var subKeys = Object.keys(OPTIONS[key]);
-        for (var j = 0; j < subKeys.length; j++) {
-          var subKey = subKeys[j];
-          if (subKey in overrides[key]) {
-            OPTIONS[key][subKey] = overrides[key][subKey];
-          }
-        }
-      } else {
-        OPTIONS[key] = overrides[key];
-      }
-    }
-  }
-}
 
 // passportjs verify callback for the Auth0Strategy
 var verifyCallback = function (
@@ -70,6 +48,7 @@ var deserializeUser = function (user, done) {
   done(null, user);
 }
 
+// the route handler for the auth0 callback
 var authCallbackHandler = function (req, res) {
   if (!req.user) {
     throw new Error('user null');
@@ -83,7 +62,9 @@ var authCallbackHandler = function (req, res) {
  */
 exports.init = function (app, options) {
   // override any options that were specified
-  overrideOptions(options);
+  if (options) {
+    OPTIONS = merge.recursive(OPTIONS, options);
+  }
   // build auth0 passportjs strategy
   var strategy = new Auth0Strategy(OPTIONS.auth0, verifyCallback);
   passport.use(strategy);
