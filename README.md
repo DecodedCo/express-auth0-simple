@@ -78,11 +78,11 @@ The options are:
 | Key                  | Type                               | Description                                                                                                                                                                  |
 | -------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `auth0`              | **Object**                         | Defines options that are passed directly into `passport-auth0`, these are described below                                                                                    |
-| `auth0.domain`       | **String**                         | The domain configured in your Auth0 Dashboard. Normally in the format `<domain>.<region>.auth0.com`                                                                          |
+| `auth0.domain`       | **String**                         | The domain configured in your Auth0 Dashboard (Normally in the format `<domain>.<region>.auth0.com`)                                                                         |
 | `auth0.clientID`     | **String**                         | Client ID as shown in your Auth0 Dashboard                                                                                                                                   |
 | `auth0.clientSecret` | **String**                         | Client Secret as shown in your Auth0 Dashboard                                                                                                                               |
 | `auth0.callbackURL`  | **String**                         | URL that your application uses to receive the OAuth callback from Auth0. This library will create an express route at that URL for you (Must match value in Auth0 Dashboard) |
-| `cookieSecret`       | **String** OR **Array of Strings** | See https://github.com/expressjs/session#secret for more info                                                                                                                |
+| `cookieSecret`       | **String** OR **Array of Strings** | See https://github.com/expressjs/session#secret for more info (This is set to a random UUID by default and shoul normally not need changing)                                 |
 | `successRedirect`    | **String**                         | A URL to redirect to on successful Authentication                                                                                                                            |
 | `failureRedirect`    | **String**                         | A URL to redirect to on failed Authentication                                                                                                                                |
 
@@ -91,14 +91,13 @@ Shown here is a full options object with every key populated, but note that each
 ```js
 var options = {
   auth0: {
-    domain: 'yourdomain.eu.auth0.com', // this can be found in your Auth0 dashboard/app config
-    clientID: 'client_id_super_secret', // same as above
-    clientSecret: 'client_secret_super_super_secret!', // same as above
-    callbackURL: '/callback' // this can be customised and must match what is set in Auth0
+    domain: 'yourdomain.eu.auth0.com',
+    clientID: 'client_id_super_secret',
+    clientSecret: 'client_secret_super_super_secret!',
+    callbackURL: '/callback'
   },
-  // You won't need to override this for most purposes (default is a random uuid)
   cookieSecret: 'cookiesRkuhl',
-  successRedirect: '/', // URL to redirect to on successful authentication
-  failureRedirect: '/auth-fail' // URL to redirect to on failed authentication
+  successRedirect: '/',
+  failureRedirect: '/auth-fail'
 }
 ```
