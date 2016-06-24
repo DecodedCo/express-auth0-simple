@@ -1,6 +1,6 @@
 {
   "name": "decoded-express-auth",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Authentication middleware for Decoded's Express-based applications",
   "main": "auth.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "author": "Decoded Developers <dev@decoded.com> (https://decoded.com/)",
   "contributors": [
-    "Joshua Saxby <josh+S7lHQutGG9Pnxmw776JokV@decoded.com> (https://github.com/saxbophone)"
+    "Joshua Saxby <josh+I2ZxjdznP4X4ciUvuu1dVT8H/so@decoded.com> (https://github.com/saxbophone)"
   ],
   "license": "SEE LICENSE IN <LICENSE>",
   "bugs": {
