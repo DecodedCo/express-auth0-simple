@@ -21,7 +21,7 @@ npm install --save git+ssh://git@github.com:DecodedCo/decoded-express-auth.git
 Or alternatively, add this line to the `dependencies` section of your `package.json` file:
 
 ```json
-"decoded-express-auth": "git+ssh://git@github.com/DecodedCo/decoded-express-auth.git#develop"
+"decoded-express-auth": "git+ssh://git@github.com/DecodedCo/decoded-express-auth.git"
 ```
 
 ### Use Package
