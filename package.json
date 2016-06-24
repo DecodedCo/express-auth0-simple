@@ -1,8 +1,8 @@
 {
   "name": "decoded-express-auth",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Authentication middleware for Decoded's Express-based applications",
-  "main": "index.js",
+  "main": "auth.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,10 +10,20 @@
     "type": "git",
     "url": "git+ssh://git@github.com/DecodedCo/decoded-express-auth.git"
   },
-  "author": "Joshua Saxby <josh@decoded.com> (https://decoded.com/)",
+  "author": "Decoded Developers <dev@decoded.com> (https://decoded.com/)",
+  "contributors": [
+    "Joshua Saxby <josh+I2ZxjdznP4X4ciUvuu1dVT8H/so@decoded.com> (https://github.com/saxbophone)"
+  ],
   "license": "SEE LICENSE IN <LICENSE>",
   "bugs": {
     "url": "https://github.com/DecodedCo/decoded-express-auth/issues"
   },
-  "homepage": "https://github.com/DecodedCo/decoded-express-auth#readme"
+  "homepage": "https://github.com/DecodedCo/decoded-express-auth#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express-session": "^1.13.0",
+    "merge": "^1.2.0",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.5.1"
+  }
 }
