@@ -85,6 +85,8 @@ The options are:
 | `cookieSecret`       | **String** OR **Array of Strings** | See https://github.com/expressjs/session#secret for more info (This is set to a random UUID by default and shoul normally not need changing)                                 |
 | `successRedirect`    | **String**                         | A URL to redirect to on successful Authentication                                                                                                                            |
 | `failureRedirect`    | **String**                         | A URL to redirect to on failed Authentication                                                                                                                                |
+| `serializeUser`      | **Function**                       | A function to use for serialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                               |
+| `deserializeUser`    | **Function**                       | A function to use for deserialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                             |
 
 Shown here is a full options object with every key populated, but note that each key is optional and will take the default for that argument if not given:
 

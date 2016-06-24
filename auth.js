@@ -25,7 +25,9 @@ var OPTIONS = {
   },
   cookieSecret: uuid.v4(),
   successRedirect: '/',
-  failureRedirect: '/'
+  failureRedirect: '/',
+  serializeUser: null,
+  deserializeUser: null
 };
 
 // passportjs verify callback for the Auth0Strategy
@@ -38,7 +40,7 @@ var verifyCallback = function (
   return done(null, profile);
 }
 
-// passportjs user serialisation/deserialisation functions
+// passportjs default user serialisation/deserialisation functions
 // This is not a best practice, but we want to keep things simple for now
 var serializeUser = function (user, done) {
   done(null, user);
@@ -69,8 +71,8 @@ exports.init = function (app, options) {
   var strategy = new Auth0Strategy(OPTIONS.auth0, verifyCallback);
   passport.use(strategy);
   // register passportjs serialisation/deserialisation functions
-  passport.serializeUser(serializeUser);
-  passport.deserializeUser(deserializeUser);
+  passport.serializeUser(serializeUser || OPTIONS.serializeUser);
+  passport.deserializeUser(deserializeUser || OPTIONS.deserializeUser);
   // register cookie and session middlewares
   app.use(cookieParser());
   app.use(
