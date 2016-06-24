@@ -71,8 +71,8 @@ exports.init = function (app, options) {
   var strategy = new Auth0Strategy(OPTIONS.auth0, verifyCallback);
   passport.use(strategy);
   // register passportjs serialisation/deserialisation functions
-  passport.serializeUser(serializeUser || OPTIONS.serializeUser);
-  passport.deserializeUser(deserializeUser || OPTIONS.deserializeUser);
+  passport.serializeUser(OPTIONS.serializeUser || serializeUser);
+  passport.deserializeUser(OPTIONS.deserializeUser || deserializeUser);
   // register cookie and session middlewares
   app.use(cookieParser());
   app.use(
