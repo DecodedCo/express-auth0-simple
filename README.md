@@ -37,6 +37,9 @@ var decodedAuth = require('decoded-express-auth'); // Import the middleware libr
 decodedAuth.init(app); // Pass in your express app instance here
 ```
 
+> #### Important Note
+The environment variables needed by the middleware must already be defined before you `require()` it.
+
 Use the `requiresLogin` middleware provided by this app whenever you have one or more URL routes you want to be protected behind Auth0 authentication. Attempting to access any of the routes using this middleware will redirect the user to Auth0 to login first before allowing them to continue:
 
 ```js
