@@ -18,9 +18,6 @@ var merge = require('merge');
 // global module default config object
 var OPTIONS = {
   auth0: {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL: '/auth/callback'
   },
   cookieSecret: uuid.v4(),
@@ -59,10 +56,42 @@ var authCallbackHandler = function (req, res) {
 }
 
 /*
+ * This is called by init() and is used to load Auth0 config variables from
+ * environment variables. You can also call it yourself if you want.
+ * By default, this doesn't override variables that already exit, but you
+ * can optionally tell it to override all variables with the environment ones
+ * if you want, with the sole function argument.
+ */
+exports.reloadConfig = function(override) {
+  if (override) {
+    OPTIONS.auth0 = merge(
+      OPTIONS.auth0,
+      {
+        domain: process.env.AUTH0_DOMAIN,
+        clientID: process.env.AUTH0_CLIENT_ID,
+        clientSecret: process.env.AUTH0_CLIENT_SECRET
+      }
+    );
+  } else {
+    if (!OPTIONS.auth0.domain) {
+      OPTIONS.auth0.domain = process.env.AUTH0_DOMAIN;
+    }
+    if (!OPTIONS.auth0.clientID) {
+      OPTIONS.auth0.clientID = process.env.AUTH0_CLIENT_ID;
+    }
+    if (!OPTIONS.auth0.clientSecret) {
+      OPTIONS.auth0.clientSecret = process.env.AUTH0_CLIENT_SECRET;
+    }
+  }
+}
+
+/*
  * Call this once with your express app instance as the first argument and an
  * options object as the second. This will setup and initialise the middleware.
  */
 exports.init = function (app, options) {
+  // reload options from environment variables
+  module.exports.reloadConfig(false);
   // override any options that were specified
   if (options) {
     OPTIONS = merge.recursive(OPTIONS, options);
