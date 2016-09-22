@@ -33,6 +33,7 @@ module.exports = function(app, options) {
     serializeUser: null,
     deserializeUser: null
   };
+  var strategy;
 
   // reload options from environment variables
   reloadConfig(false);
@@ -41,6 +42,35 @@ module.exports = function(app, options) {
   if (options) {
     _options = merge.recursive(_options, options);
   }
+
+  // build auth0 passportjs strategy
+  strategy = new Auth0Strategy(_options.auth0, verifyCallback);
+  passport.use(strategy);
+  // register passportjs serialisation/deserialisation functions
+  passport.serializeUser(_options.serializeUser || serializeUser);
+  passport.deserializeUser(_options.deserializeUser || deserializeUser);
+  // register cookie and session middlewares
+  app.use(cookieParser());
+  app.use(
+    session(
+      {
+        secret: _options.cookieSecret,
+        resave: false,
+        saveUninitialized: false
+      }
+    )
+  );
+  // register passportjs middlewares
+  app.use(passport.initialize());
+  app.use(passport.session());
+  // create Auth0 callback handler
+  app.get(
+    _options.auth0.callbackURL,
+    passport.authenticate(
+      'auth0', { failureRedirect: _options.failureRedirect }
+    ),
+    authCallbackHandler
+  );
 
   // public methods
   return {
@@ -51,7 +81,7 @@ module.exports = function(app, options) {
      * can optionally tell it to override all variables with the environment ones
      * if you want, with the sole function argument.
      */
-    reloadConfig: function(override) {
+    reloadConfig: function (override) {
       if (override) {
         _options.auth0 = merge(
           _options.auth0,
@@ -73,83 +103,35 @@ module.exports = function(app, options) {
         }
       }
     },
-    ...
-  };
-}
-
-// passportjs verify callback for the Auth0Strategy
-var verifyCallback = function (
-  accessToken, refreshToken, extraParams, profile, done
-) {
-  // accessToken is the token to call Auth0 API (not needed in the most cases)
-  // extraParams.id_token has the JSON Web Token
-  // profile has all the information from the user
-  return done(null, profile);
-}
-
-// passportjs default user serialisation/deserialisation functions
-// This is not a best practice, but we want to keep things simple for now
-var serializeUser = function (user, done) {
-  done(null, user);
-}
-
-var deserializeUser = function (user, done) {
-  done(null, user);
-}
-
-// the route handler for the auth0 callback
-var authCallbackHandler = function (req, res) {
-  if (!req.user) {
-    throw new Error('user null');
-  }
-  res.redirect(OPTIONS.successRedirect);
-}
-
-/*
- * Call this once with your express app instance as the first argument and an
- * options object as the second. This will setup and initialise the middleware.
- */
-exports.init = function (app, options) {
-  // reload options from environment variables
-  module.exports.reloadConfig(false);
-  // override any options that were specified
-  if (options) {
-    OPTIONS = merge.recursive(OPTIONS, options);
-  }
-  // build auth0 passportjs strategy
-  var strategy = new Auth0Strategy(OPTIONS.auth0, verifyCallback);
-  passport.use(strategy);
-  // register passportjs serialisation/deserialisation functions
-  passport.serializeUser(OPTIONS.serializeUser || serializeUser);
-  passport.deserializeUser(OPTIONS.deserializeUser || deserializeUser);
-  // register cookie and session middlewares
-  app.use(cookieParser());
-  app.use(
-    session(
-      {
-        secret: OPTIONS.cookieSecret,
-        resave: false,
-        saveUninitialized: false
+    // passportjs verify callback for the Auth0Strategy
+    verifyCallback: function (
+      accessToken, refreshToken, extraParams, profile, done
+    ) {
+      // accessToken is the token to call Auth0 API (not needed in the most cases)
+      // extraParams.id_token has the JSON Web Token
+      // profile has all the information from the user
+      return done(null, profile);
+    },
+    // passportjs default user serialisation/deserialisation functions
+    // This is not a best practice, but we want to keep things simple for now
+    serializeUser: function (user, done) {
+      done(null, user);
+    },
+    deserializeUser: function (user, done) {
+      done(null, user);
+    },
+    // the route handler for the auth0 callback
+    authCallbackHandler: function (req, res) {
+      if (!req.user) {
+        throw new Error('user null');
       }
-    )
-  );
-  // register passportjs middlewares
-  app.use(passport.initialize());
-  app.use(passport.session());
-  // create Auth0 callback handler
-  app.get(
-    OPTIONS.auth0.callbackURL,
-    passport.authenticate(
-      'auth0', { failureRedirect: OPTIONS.failureRedirect }
-    ),
-    authCallbackHandler
-  );
-}
-
-// Use this middleware to protect one or more routes from access without auth
-exports.requiresLogin = function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    return res.redirect(OPTIONS.auth0.callbackURL);
-  }
-  next();
-}
+      res.redirect(OPTIONS.successRedirect);
+    },
+    requiresLogin: function (req, res, next) {
+      if (!req.isAuthenticated()) {
+        return res.redirect(OPTIONS.auth0.callbackURL);
+      }
+      next();
+    }
+  };
+};
