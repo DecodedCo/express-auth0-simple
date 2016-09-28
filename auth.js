@@ -93,6 +93,7 @@ module.exports = function(app, options) {
       }
     }
   };
+  // Use this middleware to protect one or more routes from access without auth
   this.requiresLogin = function (req, res, next) {
     if (!req.isAuthenticated()) {
       return res.redirect(_options.auth0.callbackURL);
