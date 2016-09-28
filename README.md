@@ -33,22 +33,22 @@ Having installed the package and/or added it as a dependency to your project, yo
 
 var decodedAuth = require('decoded-express-auth'); // Import the middleware library
 
-// inititalise decodedAuth
-decodedAuth.init(app); // Pass in your express app instance here
+// inititalise an instance of decoded auth
+var auth = new decodedAuth(app); // Pass in your express app instance here
 ```
 
-Use the `requiresLogin` middleware provided by this app whenever you have one or more URL routes you want to be protected behind Auth0 authentication. Attempting to access any of the routes using this middleware will redirect the user to Auth0 to login first before allowing them to continue:
+Use the `requiresLogin` middleware method of your auth instance whenever you have one or more URL routes you want to be protected behind Auth0 authentication. Attempting to access any of the routes using this middleware will redirect the user to Auth0 to login first before allowing them to continue:
 
 ```js
 // Any URL route defined after this point will require authentication
-app.use(decodedAuth.requiresLogin);
+app.use(auth.requiresLogin);
 ```
 
 OR:
 
 ```js
 // Here it is used as a per-route middleware to protect only this URL route
-app.get('/my-fab-route', decodedAuth.requiresLogin, function(req,res) {
+app.get('/my-fab-route', auth.requiresLogin, function(req,res) {
   res.send('My route rocks! 🐸 💜');
 })
 ```
@@ -71,7 +71,7 @@ If you **really need to**, you can set these values via the options argument whe
 
 ### Options Object
 
-When initialising the middleware, you can optionally provide a second argument to the `init()` function - this should be an object. This can include options that override some configuration parameters of the middleware.
+When initialising the middleware, you can optionally provide a second argument to the `decodedAuth()` constructor - this should be an object. This can include options that override some configuration parameters of the middleware.
 
 The options are:
 
