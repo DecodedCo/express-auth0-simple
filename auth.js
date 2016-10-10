@@ -30,8 +30,10 @@ module.exports = function(app, options) {
     cookieSecret: uuid.v4(),
     successRedirect: '/',
     failureRedirect: '/',
-    serializeUser: null,
-    deserializeUser: null
+    serializeUser: null,  // optional pointer to a callback function
+    deserializeUser: null, // as above
+    // if set to true, the library will automatically provide a failure route
+    useDefaultFailureRoute: true
   };
   var strategy;
   // end private variables
@@ -122,5 +124,14 @@ module.exports = function(app, options) {
     ),
     authCallbackHandler
   );
+  // create Auth0 failure route if requested
+  if (_options.useDefaultFailureRoute) {
+    app.get(
+      _options.auth0.failureRedirect,
+      function (req, res) {
+        res.send(403);
+      }
+    )
+  }
   // end constructor function proper
 };
