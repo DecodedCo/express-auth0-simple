@@ -127,7 +127,7 @@ module.exports = function(app, options) {
   // create Auth0 failure route if requested
   if (_options.useDefaultFailureRoute) {
     app.get(
-      _options.auth0.failureRedirect,
+      _options.failureRedirect,
       function (req, res) {
         res.sendStatus(403);
       }
