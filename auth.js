@@ -129,7 +129,7 @@ module.exports = function(app, options) {
     app.get(
       _options.auth0.failureRedirect,
       function (req, res) {
-        res.send(403);
+        res.sendStatus(403);
       }
     )
   }
