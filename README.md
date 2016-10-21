@@ -100,6 +100,8 @@ var options = {
   },
   cookieSecret: 'cookiesRkuhl',
   successRedirect: '/',
-  failureRedirect: '/auth-fail'
+  failureRedirect: '/auth-fail',
+  // if set to true (default), the library will automatically provide a failure route
+  useDefaultFailureRoute: true
 }
 ```

@@ -124,7 +124,7 @@ module.exports = function(app, options) {
     ),
     authCallbackHandler
   );
-  // create Auth0 failure route if requested
+  // create passportjs/Auth0 failure route if requested
   if (_options.useDefaultFailureRoute) {
     app.get(
       _options.failureRedirect,
