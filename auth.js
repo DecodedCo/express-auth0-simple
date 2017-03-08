@@ -1,7 +1,15 @@
 /*
- * decoded-express-auth middleware
+ * express-auth0-simple
  *
- * Authentication middleware for Decoded's Express-based applications
+ * Simple authentication middleware for integrating Auth0 with Express-based
+ * applications.
+ *
+ *
+ * Copyright (c) 2016 Decoded Ltd.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
 // passportjs and Auth0 custom passportjs auth strategy
@@ -40,8 +48,8 @@ module.exports = function(app, options) {
 
   // begin private methods
   /*
-   * This is called by module constructor and is used to load Auth0 config variables
-   * from environment variables.
+   * This is called by module constructor and is used to load Auth0 config
+   * variables from environment variables.
    */
   var loadConfig = function () {
     _options.auth0 = merge(
@@ -57,7 +65,8 @@ module.exports = function(app, options) {
   var verifyCallback = function (
     accessToken, refreshToken, extraParams, profile, done
   ) {
-    // accessToken is the token to call Auth0 API (not needed in the most cases)
+    // accessToken is the token to call Auth0 API (not needed in the most
+    // cases)
     // extraParams.id_token has the JSON Web Token
     // profile has all the information from the user
     return done(null, profile);

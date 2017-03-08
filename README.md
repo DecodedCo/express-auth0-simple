@@ -1,5 +1,5 @@
-# decoded-express-auth
-Authentication middleware for Decoded's Express-based applications
+# express-auth0-simple
+Simple authentication middleware for integrating Auth0 with Express-based applications.
 
 ## About
 This NodeJS package abstracts away the boilerplate code needed to integrate a NodeJS web application with the oauth authentication provider [Auth0](https://auth0.com/).
@@ -29,7 +29,7 @@ npm install --save 'https://github.com/DecodedCo/decoded-express-auth.git'
 Or alternatively, add this line to the `dependencies` section of your `package.json` file:
 
 ```json
-"decoded-express-auth": "https://github.com/DecodedCo/decoded-express-auth.git#v2.0.1"
+"express-auth0-simple": "https://github.com/DecodedCo/decoded-express-auth.git#v2.0.1"
 ```
 
 > Amend the part of the string after (and including) the `#` to change which version of the library you wish to depend on.
@@ -41,10 +41,10 @@ Having installed the package and/or added it as a dependency to your project, yo
 ```js
 // You'll probably want to require() other dependencies like express first, above this line...
 
-var decodedAuth = require('decoded-express-auth'); // Import the middleware library
+var expressAuth0Simple = require('express-auth0-simple'); // Import the middleware library
 
 // inititalise an instance of decoded auth
-var auth = new decodedAuth(app); // Pass in your express app instance here
+var auth = new expressAuth0Simple(app); // Pass in your express app instance here
 ```
 
 Use the `requiresLogin` middleware method of your auth instance whenever you have one or more URL routes you want to be protected behind Auth0 authentication. Attempting to access any of the routes using this middleware will redirect the user to Auth0 to login first before allowing them to continue:
@@ -81,7 +81,7 @@ If you **really need to**, you can set these values via the options argument whe
 
 ### Options Object
 
-When initialising the middleware, you can optionally provide a second argument to the `decodedAuth()` constructor - this should be an object. This can include options that override some configuration parameters of the middleware.
+When initialising the middleware, you can optionally provide a second argument to the `expressAuth0Simple()` constructor - this should be an object. This can include options that override some configuration parameters of the middleware.
 
 The options are:
 
