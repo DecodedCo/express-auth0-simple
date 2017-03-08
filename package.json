@@ -1,24 +1,26 @@
 {
-  "name": "decoded-express-auth",
+  "name": "express-auth0-simple",
   "version": "2.0.1",
-  "description": "Authentication middleware for Decoded's Express-based applications",
+  "description": "Simple authentication middleware for integrating Auth0 with Express-based applications.",
+  "keywords": ["express", "auth0", "middleware", "authentication", "simple", "express4"],
   "main": "auth.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/DecodedCo/decoded-express-auth.git"
+    "url": "https://github.com/DecodedCo/express-auth0-simple.git"
   },
   "author": "Decoded Developers <dev@decoded.com> (https://decoded.com/)",
   "contributors": [
-    "Joshua Saxby <josh+I2ZxjdznP4X4ciUvuu1dVT8H/so@decoded.com> (https://github.com/saxbophone)"
+    "Joshua Saxby <josh+I2ZxjdznP4X4ciUvuu1dVT8H/so@decoded.com> (https://github.com/saxbophone)",
+    "Tom Wilshere <tomw@decoded.com> (https://github.com/tomwilshere)"
   ],
-  "license": "SEE LICENSE IN <LICENSE>",
+  "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/DecodedCo/decoded-express-auth/issues"
+    "url": "https://github.com/DecodedCo/express-auth0-simple/issues"
   },
-  "homepage": "https://github.com/DecodedCo/decoded-express-auth#readme",
+  "homepage": "https://github.com/DecodedCo/express-auth0-simple#readme",
   "dependencies": {
     "cookie-parser": "^1.4.3",
     "express-session": "^1.13.0",
