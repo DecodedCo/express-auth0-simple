@@ -29,7 +29,7 @@ module.exports = function(app, options) {
     },
     cookieSecret: uuid.v4(),
     successRedirect: '/',
-    failureRedirect: '/',
+    failureRedirect: '/auth/failed',
     serializeUser: null,  // optional pointer to a callback function
     deserializeUser: null, // as above
     // if set to true, the library will automatically provide a failure route
