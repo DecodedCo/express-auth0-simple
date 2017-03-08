@@ -10,10 +10,18 @@ Here is a quickstart guide on how to setup this middleware.
 
 ### Install Package
 
-Run this command within an existing node project with a `package.json` file to install the package as a dependency of your project.
+Run one of these commands within an existing node project with a `package.json` file to install the package as a dependency of your project.
+
+#### For latest tagged version
 
 ```sh
-npm install --save git+ssh://git@github.com:DecodedCo/decoded-express-auth.git
+npm install --save 'https://github.com/DecodedCo/decoded-express-auth.git#v2.0.1'
+```
+
+#### For latest master branch (bleeding edge)
+
+```sh
+npm install --save 'https://github.com/DecodedCo/decoded-express-auth.git'
 ```
 
 > **Pro Tip:** Omit the `--save` option if you just want to install the package without adding it as a dependency.
@@ -21,8 +29,10 @@ npm install --save git+ssh://git@github.com:DecodedCo/decoded-express-auth.git
 Or alternatively, add this line to the `dependencies` section of your `package.json` file:
 
 ```json
-"decoded-express-auth": "git+ssh://git@github.com/DecodedCo/decoded-express-auth.git"
+"decoded-express-auth": "https://github.com/DecodedCo/decoded-express-auth.git#v2.0.1"
 ```
+
+> Amend the part of the string after (and including) the `#` to change which version of the library you wish to depend on.
 
 ### Use Package
 
