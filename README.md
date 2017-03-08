@@ -10,18 +10,10 @@ Here is a quickstart guide on how to setup this middleware.
 
 ### Install Package
 
-Run one of these commands within an existing node project with a `package.json` file to install the package as a dependency of your project.
-
-#### For latest tagged version
+Run this command within an existing node project with a `package.json` file to install the package as a dependency of your project.
 
 ```sh
-npm install --save 'https://github.com/DecodedCo/decoded-express-auth.git#v2.0.1'
-```
-
-#### For latest master branch (bleeding edge)
-
-```sh
-npm install --save 'https://github.com/DecodedCo/decoded-express-auth.git'
+npm install --save express-auth0-simple
 ```
 
 > **Pro Tip:** Omit the `--save` option if you just want to install the package without adding it as a dependency.
@@ -29,10 +21,8 @@ npm install --save 'https://github.com/DecodedCo/decoded-express-auth.git'
 Or alternatively, add this line to the `dependencies` section of your `package.json` file:
 
 ```json
-"express-auth0-simple": "https://github.com/DecodedCo/decoded-express-auth.git#v2.0.1"
+"express-auth0-simple": "^3.0.0"
 ```
-
-> Amend the part of the string after (and including) the `#` to change which version of the library you wish to depend on.
 
 ### Use Package
 
@@ -69,7 +59,7 @@ app.get('/my-fab-route', auth.requiresLogin, function(req,res) {
 
 So that your app can authenticate with Auth0, you'll need to provide your Auth0 account credentials. You need to provide your **Auth0 Client ID**, your **Auth0 Client Secret** and your **Auth0 Domain**. These values differ from app to app and you can find the values for your app in its settings page in the dashboard.
 
-The best way of supplying these credentials to your app is via environment variables and this package will do that by default. Make sure the following environment variables have been set and are accessible to the process running the app:
+The easiest secure way of supplying these credentials to your app is via environment variables and this package will do that by default. Make sure the following environment variables have been set and are accessible to the process running the app:
 
 ```sh
 export AUTH0_CLIENT_ID='your_client_id';
@@ -77,7 +67,7 @@ export AUTH0_CLIENT_SECRET='your_client_secret';
 export AUTH0_DOMAIN='companyltd.eu.auth0.com';
 ```
 
-If you **really need to**, you can set these values via the options argument when initialising the middleware, but if you are doing this, you **MUST** make sure that these are not stored in source code!
+You can also set these values via the options argument when initialising the middleware, but if you are doing this, it is _highly recommended_ that these are not stored in source code.
 
 ### Options Object
 
@@ -92,7 +82,7 @@ The options are:
 | `auth0.clientID`     | **String**                         | Client ID as shown in your Auth0 Dashboard                                                                                                                                   |
 | `auth0.clientSecret` | **String**                         | Client Secret as shown in your Auth0 Dashboard                                                                                                                               |
 | `auth0.callbackURL`  | **String**                         | URL that your application uses to receive the OAuth callback from Auth0. This library will create an express route at that URL for you (Must match value in Auth0 Dashboard) |
-| `cookieSecret`       | **String** OR **Array of Strings** | See https://github.com/expressjs/session#secret for more info (This is set to a random UUID by default and shoul normally not need changing)                                 |
+| `cookieSecret`       | **String** OR **Array of Strings** | See https://github.com/expressjs/session#secret for more info (This is set to a random UUID by default and should normally not need changing)                                |
 | `successRedirect`    | **String**                         | A URL to redirect to on successful Authentication                                                                                                                            |
 | `failureRedirect`    | **String**                         | A URL to redirect to on failed Authentication                                                                                                                                |
 | `serializeUser`      | **Function**                       | A function to use for serialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                               |

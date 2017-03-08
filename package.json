@@ -9,17 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DecodedCo/decoded-express-auth.git"
+    "url": "https://github.com/DecodedCo/express-auth0-simple.git"
   },
   "author": "Decoded Developers <dev@decoded.com> (https://decoded.com/)",
   "contributors": [
-    "Joshua Saxby <josh+I2ZxjdznP4X4ciUvuu1dVT8H/so@decoded.com> (https://github.com/saxbophone)"
+    "Joshua Saxby <josh+I2ZxjdznP4X4ciUvuu1dVT8H/so@decoded.com> (https://github.com/saxbophone)",
+    "Tom Wilshere <tomw@decoded.com> (https://github.com/tomwilshere)"
   ],
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/DecodedCo/decoded-express-auth/issues"
+    "url": "https://github.com/DecodedCo/express-auth0-simple/issues"
   },
-  "homepage": "https://github.com/DecodedCo/decoded-express-auth#readme",
+  "homepage": "https://github.com/DecodedCo/express-auth0-simple#readme",
   "dependencies": {
     "cookie-parser": "^1.4.3",
     "express-session": "^1.13.0",
