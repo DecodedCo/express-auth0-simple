@@ -75,20 +75,21 @@ When initialising the middleware, you can optionally provide a second argument t
 
 The options are:
 
-| Key                  | Type                               | Description                                                                                                                                                                  |
-| -------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth0`              | **Object**                         | Defines options that are passed directly into `passport-auth0`, these are described below                                                                                    |
-| `auth0.domain`       | **String**                         | The domain configured in your Auth0 Dashboard (Normally in the format `<domain>.<region>.auth0.com`)                                                                         |
-| `auth0.clientID`     | **String**                         | Client ID as shown in your Auth0 Dashboard                                                                                                                                   |
-| `auth0.clientSecret` | **String**                         | Client Secret as shown in your Auth0 Dashboard                                                                                                                               |
-| `auth0.callbackURL`  | **String**                         | URL that your application uses to receive the OAuth callback from Auth0. This library will create an express route at that URL for you (Must match value in Auth0 Dashboard) |
-| `cookieSecret`       | **String** OR **Array of Strings** | See https://github.com/expressjs/session#secret for more info (This is set to a random UUID by default and should normally not need changing)                                |
-| `successRedirect`    | **String**                         | A URL to redirect to on successful Authentication                                                                                                                            |
-| `failureRedirect`    | **String**                         | A URL to redirect to on failed Authentication                                                                                                                                |
-| `serializeUser`      | **Function**                       | A function to use for serialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                               |
-| `deserializeUser`    | **Function**                       | A function to use for deserialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                             |
+| Key                      | Type                               | Default Value    | Description                                                                                                                                                                  |
+| ------------------------ | ---------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth0`                  | **Object**                         |                  | Defines options that are passed directly into `passport-auth0`, these are described below                                                                                    |
+| `auth0.domain`           | **String**                         |                  | The domain configured in your Auth0 Dashboard (Normally in the format `<domain>.<region>.auth0.com`)                                                                         |
+| `auth0.clientID`         | **String**                         |                  | Client ID as shown in your Auth0 Dashboard                                                                                                                                   |
+| `auth0.clientSecret`     | **String**                         |                  | Client Secret as shown in your Auth0 Dashboard                                                                                                                               |
+| `auth0.callbackURL`      | **String**                         | `/auth/callback` | URL that your application uses to receive the OAuth callback from Auth0. This library will create an express route at that URL for you (Must match value in Auth0 Dashboard) |
+| `cookieSecret`           | **String** OR **Array of Strings** | _random UUID_    | See https://github.com/expressjs/session#secret for more info (This is set to a random UUID by default and should normally not need changing)                                |
+| `successRedirect`        | **String**                         | `/`              | A URL to redirect to on successful Authentication                                                                                                                            |
+| `failureRedirect`        | **String**                         | `/auth/failed`   | A URL to redirect to on failed Authentication                                                                                                                                |
+| `serializeUser`          | **Function**                       | `null`           | A function to use for serialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                               |
+| `deserializeUser`        | **Function**                       | `null`           | A function to use for deserialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                             |
+| `useDefaultFailureRoute` | **Boolean**                        | `true`           | Whether the library should automatically provide a failure route handler or not                                                                                              |
 
-Shown here is a full options object with every key populated, but note that each key is optional and will take the default for that argument if not given:
+Shown here is a full options object with every key populated, but note that each key is optional and will take the default for that argument if not given (many of the default values are recommended over the values provided below, which are just for demonstration).
 
 ```js
 var options = {
@@ -101,7 +102,6 @@ var options = {
   cookieSecret: 'cookiesRkuhl',
   successRedirect: '/',
   failureRedirect: '/auth-fail',
-  // if set to true (default), the library will automatically provide a failure route
   useDefaultFailureRoute: true
 }
 ```
