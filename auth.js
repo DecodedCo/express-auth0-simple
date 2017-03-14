@@ -19,7 +19,7 @@ var Auth0Strategy = require('passport-auth0');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 // used for generating uuid for cookie secret
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 // for overriding options object
 var merge = require('merge');
 
