@@ -12,16 +12,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// passportjs and Auth0 custom passportjs auth strategy
-var passport = require('passport');
-var Auth0Strategy = require('passport-auth0');
-// Session and cookies middlewares to keep user logged in
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-// used for generating uuid for cookie secret
-var uuid = require('uuid');
+// Auth0 custom passportjs auth strategy
+import Auth0Strategy from 'passport-auth0';
+// cookie middleware for keeping user logged in
+import cookieParser from 'cookie-parser';
 // for overriding options object
-var merge = require('merge');
+import merge from 'merge';
+// passportjs
+import passport from 'passport';
+// Session middleware for keeping user logged in
+import session from 'express-session';
+// used for generating uuid for cookie secret
+import uuid from 'uuid';
 
 /*
  * Main prototype constructor
