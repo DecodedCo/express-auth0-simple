@@ -26,7 +26,7 @@ for (const item of ['auth0Options', 'options', 'requiresLogin', 'strategy']) {
 }
 
 export class ExpressAuth0Middleware {
-  constructor (options={}, auth0Options={}) {
+  constructor (auth0Options={}, options={}) {
     this[_private.auth0Options] = merge(this.defaultAuth0Options, auth0Options);
     this[_private.options] = merge.recursive(this.defaultOptions, options);
     this[_private.strategy] = new Auth0Strategy(
