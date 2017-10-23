@@ -1,6 +1,6 @@
 {
   "name": "express-auth0-simple",
-  "version": "3.1.0-rc.5",
+  "version": "3.1.0-rc.6",
   "description": "Simple authentication middleware for integrating Auth0 with Express-based applications.",
   "keywords": [
     "express",
@@ -32,12 +32,9 @@
   "homepage": "https://github.com/DecodedCo/express-auth0-simple#readme",
   "dependencies": {
     "compiled": "~1.19.1",
-    "cookie-parser": "~1.4.3",
-    "express-session": "~1.13.0",
     "merge": "~1.2.0",
     "passport": "~0.3.2",
-    "passport-auth0": "~0.5.1",
-    "uuid": "~3.0.1"
+    "passport-auth0": "~0.5.1"
   },
   "config": {
     "compiled": {
