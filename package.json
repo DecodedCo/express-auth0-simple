@@ -13,6 +13,7 @@
   "main": "dist/auth.compiled.js",
   "scripts": {
     "build": "build",
+    "lint": "eslint src/auth.js",
     "postinstall": "compile",
     "test": "echo 'There are no tests'; false"
   },
@@ -36,10 +37,21 @@
     "passport": "~0.3.2",
     "passport-auth0": "~0.5.1"
   },
+  "devDependencies": {
+    "babel-eslint": "~7.2.3",
+    "eslint": "~4.3.0",
+    "eslint-config-standard": "~10.2.1",
+    "eslint-plugin-import": "~2.7.0",
+    "eslint-plugin-node": "~5.1.1",
+    "eslint-plugin-promise": "~3.5.0",
+    "eslint-plugin-standard": "~3.0.1"
+  },
   "config": {
     "compiled": {
       "dir": "dist",
-      "files": ["src/auth.js"]
+      "files": [
+        "src/auth.js"
+      ]
     }
   }
 }

@@ -1,0 +1,28 @@
+{
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "standard"
+  ],
+  "env"     : {
+    "browser" : true
+  },
+  "rules": {
+    "indent": ["error", 2],
+    "semi" : ["error", "always"],
+    "space-infix-ops": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 80,
+        "comments": 120,
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "no-class-assign": 0,
+    "no-return-assign": 0,
+    "comma-dangle": ["error", "always-multiline"],
+    "no-undef": 0
+  }
+}

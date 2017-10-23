@@ -19,7 +19,6 @@ import merge from 'merge';
 // passportjs
 import passport from 'passport';
 
-
 // this is a bit of a hack to allow private attributes in ES6 classes
 let _private = {};
 for (const item of ['auth0Options', 'options', 'requiresLogin', 'strategy']) {
