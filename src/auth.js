@@ -27,7 +27,7 @@ import uuid from 'uuid';
 
 
 let _private = {};
-for (const item of ['auth0Options', 'options', 'strategy']) {
+for (const item of ['auth0Options', 'options', 'requiresLogin', 'strategy']) {
   _private[item] = Symbol(item);
 }
 
@@ -105,7 +105,7 @@ export class ExpressAuth0Middleware {
     }
   };
 
-  requiresLogin (req, res, next) {
+  [_private.requiresLogin] (req, res, next) {
     if (!req.isAuthenticated()) {
       // store requested URL for redirecting back to when authenticated
       req.session.nextUrl = req.originalUrl;
@@ -113,6 +113,10 @@ export class ExpressAuth0Middleware {
     } else {
       next();
     }
+  };
+
+  get requiresLogin () {
+    return this[_private.requiresLogin].bind(this);
   };
 };
 
