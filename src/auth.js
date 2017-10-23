@@ -26,15 +26,9 @@ for (const item of ['auth0Options', 'options', 'requiresLogin', 'strategy']) {
 }
 
 export class ExpressAuth0Middleware {
-  constructor (auth0Options={}, options={}) {
-    this[_private.auth0Options] = merge(
-      ExpressAuth0Middleware.defaultAuth0Options,
-      auth0Options
-    );
-    this[_private.options] = merge.recursive(
-      ExpressAuth0Middleware.defaultOptions,
-      options
-    );
+  constructor (options={}, auth0Options={}) {
+    this[_private.options] = merge.recursive(this.defaultOptions, options);
+    this[_private.auth0Options] = merge(this.defaultAuth0Options, auth0Options);
     this[_private.strategy] = new Auth0Strategy(
       this[_private.auth0Options],
       this.verifyCallback
@@ -45,18 +39,19 @@ export class ExpressAuth0Middleware {
     passport.deserializeUser(this.deserializeUser);
   };
 
-  static get defaultAuth0Options () {
+  get defaultOptions () {
+    return {
+      loginPath: '/auth/login',
+      failurePath: '/auth/login',
+    };
+  };
+
+  get defaultAuth0Options () {
     return {
       domain: process.env.AUTH0_DOMAIN,
       clientID: process.env.AUTH0_CLIENT_ID,
       clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    };
-  };
-
-  static get defaultOptions () {
-    return {
-      loginPath: '/auth/login',
-      failurePath: '/auth/login',
+      callbackURL: this[_private.options].loginPath,
     };
   };
 
