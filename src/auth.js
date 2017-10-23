@@ -27,9 +27,9 @@ import uuid from 'uuid';
 
 
 let _private = {};
-['auth0Options', 'options', 'strategy'].each((item) => {
+for (const item of ['auth0Options', 'options', 'strategy']) {
   _private[item] = Symbol(item);
-});
+}
 
 export class ExpressAuth0Middleware {
   constructor (auth0Options={}, options={}) {
