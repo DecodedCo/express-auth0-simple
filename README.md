@@ -1,8 +1,6 @@
 # express-auth0-simple
 Simple authentication middleware for integrating Auth0 with Express-based applications.
 
-> :warning: **_Warning!_** This is a release candidate of a new major version of `express-auth0-simple`! Some things may not work properly. Install `express-auth0-simple@3.0.2` for the latest stable version!
-
 ## About
 This NodeJS package abstracts away most of the boilerplate code needed to integrate a NodeJS web application with the oauth authentication provider [Auth0](https://auth0.com/).
 
