@@ -1,11 +1,21 @@
 {
   "name": "express-auth0-simple",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "Simple authentication middleware for integrating Auth0 with Express-based applications.",
-  "keywords": ["express", "auth0", "middleware", "authentication", "simple", "express4"],
-  "main": "auth.js",
+  "keywords": [
+    "express",
+    "auth0",
+    "middleware",
+    "authentication",
+    "simple",
+    "express4"
+  ],
+  "main": "dist/auth.compiled.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "build",
+    "lint": "eslint src/auth.js",
+    "postinstall": "compile",
+    "test": "echo 'There are no tests'; false"
   },
   "repository": {
     "type": "git",
@@ -22,11 +32,26 @@
   },
   "homepage": "https://github.com/DecodedCo/express-auth0-simple#readme",
   "dependencies": {
-    "cookie-parser": "^1.4.3",
-    "express-session": "^1.13.0",
-    "merge": "^1.2.0",
-    "uuid": "^3.0.1",
-    "passport": "^0.3.2",
-    "passport-auth0": "^0.5.1"
+    "compiled": "~1.19.1",
+    "merge": "~1.2.0",
+    "passport": "~0.3.2",
+    "passport-auth0": "~0.5.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "~7.2.3",
+    "eslint": "~4.3.0",
+    "eslint-config-standard": "~10.2.1",
+    "eslint-plugin-import": "~2.7.0",
+    "eslint-plugin-node": "~5.1.1",
+    "eslint-plugin-promise": "~3.5.0",
+    "eslint-plugin-standard": "~3.0.1"
+  },
+  "config": {
+    "compiled": {
+      "dir": "dist",
+      "files": [
+        "src/auth.js"
+      ]
+    }
   }
 }

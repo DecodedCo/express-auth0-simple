@@ -2,106 +2,140 @@
 Simple authentication middleware for integrating Auth0 with Express-based applications.
 
 ## About
-This NodeJS package abstracts away the boilerplate code needed to integrate a NodeJS web application with the oauth authentication provider [Auth0](https://auth0.com/).
+This NodeJS package abstracts away most of the boilerplate code needed to integrate a NodeJS web application with the oauth authentication provider [Auth0](https://auth0.com/).
+
 The code is based on Auth0's own setup guide and should work fine with any application using versions of the Express framework in the **4.x.x** version range.
+
+This package is written in ES6 but transpiles down to ES5 or whatever subset of ES6 your runtime supports at installation time.
 
 ## Setup
 Here is a quickstart guide on how to setup this middleware.
 
 ### Install Package
 
-Run this command within an existing node project with a `package.json` file to install the package as a dependency of your project.
+Add this package to your NodeJS project:
 
 ```sh
 npm install --save express-auth0-simple
 ```
 
-> **Pro Tip:** Omit the `--save` option if you just want to install the package without adding it as a dependency.
-
-Or alternatively, add this line to the `dependencies` section of your `package.json` file:
-
-```json
-"express-auth0-simple": "^3.0.0"
-```
-
 ### Use Package
+The package is typically used wherever you configure your express middleware (becase that's what it is). This is normally in the main `index.js` file for small projects.
 
-Having installed the package and/or added it as a dependency to your project, you'll now need to add the following lines to the main file of your app:
+#### Add dependencies
+For this middleware to work you'll need to make sure your express app has session and cookie functionality. You might have this functionality already, but if not you can use these middleware to provide this:
 
-```js
-// You'll probably want to require() other dependencies like express first, above this line...
+- `cookie-parser` (we've tested against version `1.4.x`)
+- `express-session` (we've tested against version `1.13.x`)
 
-var expressAuth0Simple = require('express-auth0-simple'); // Import the middleware library
+- You'll also need to install passport-js (`passport`, we've tested against version `0.3.x`)
 
-// inititalise an instance of decoded auth
-var auth = new expressAuth0Simple(app); // Pass in your express app instance here
-```
+### Configure Auth0
 
-Use the `requiresLogin` middleware method of your auth instance whenever you have one or more URL routes you want to be protected behind Auth0 authentication. Attempting to access any of the routes using this middleware will redirect the user to Auth0 to login first before allowing them to continue:
-
-```js
-// Any URL route defined after this point will require authentication
-app.use(auth.requiresLogin);
-```
-
-OR:
-
-```js
-// Here it is used as a per-route middleware to protect only this URL route
-app.get('/my-fab-route', auth.requiresLogin, function(req,res) {
-  res.send('My route rocks! 🐸 💜');
-})
-```
-
-## Configuration
-
-### Environment Variables
-
-So that your app can authenticate with Auth0, you'll need to provide your Auth0 account credentials. You need to provide your **Auth0 Client ID**, your **Auth0 Client Secret** and your **Auth0 Domain**. These values differ from app to app and you can find the values for your app in its settings page in the dashboard.
+So that your app can authenticate with Auth0, you'll need to provide your Auth0 client credentials. You need to provide your **Auth0 Client ID**, your **Auth0 Client Secret** and your **Auth0 Domain**. These values differ from app to app and you can find the values for your app in its settings page in the dashboard.
 
 The easiest secure way of supplying these credentials to your app is via environment variables and this package will do that by default. Make sure the following environment variables have been set and are accessible to the process running the app:
 
-```sh
-export AUTH0_CLIENT_ID='your_client_id';
-export AUTH0_CLIENT_SECRET='your_client_secret';
-export AUTH0_DOMAIN='companyltd.eu.auth0.com';
+```env
+AUTH0_CLIENT_ID='your_client_id'
+AUTH0_CLIENT_SECRET='your_client_secret'
+AUTH0_DOMAIN='companyltd.eu.auth0.com'
 ```
 
-You can also set these values via the options argument when initialising the middleware, but if you are doing this, it is _highly recommended_ that these are not stored in source code.
+You can also set these values via the `auth0Options` argument of the middleware constructor, but if you are doing this it is _highly recommended_ that these are not stored in source code.
 
-### Options Object
+You'll also need to set your client's `callbackURL`. This is not automatically loaded by default, so you'll have to pass this yourself in the `auth0Options` argument of the middleware constructor, along with any other additional options supported by Auth0.
 
-When initialising the middleware, you can optionally provide a second argument to the `expressAuth0Simple()` constructor - this should be an object. This can include options that override some configuration parameters of the middleware.
-
-The options are:
-
-| Key                      | Type                               | Default Value    | Description                                                                                                                                                                  |
-| ------------------------ | ---------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth0`                  | **Object**                         |                  | Defines options that are passed directly into `passport-auth0`, these are described below                                                                                    |
-| `auth0.domain`           | **String**                         |                  | The domain configured in your Auth0 Dashboard (Normally in the format `<domain>.<region>.auth0.com`)                                                                         |
-| `auth0.clientID`         | **String**                         |                  | Client ID as shown in your Auth0 Dashboard                                                                                                                                   |
-| `auth0.clientSecret`     | **String**                         |                  | Client Secret as shown in your Auth0 Dashboard                                                                                                                               |
-| `auth0.callbackURL`      | **String**                         | `/auth/callback` | URL that your application uses to receive the OAuth callback from Auth0. This library will create an express route at that URL for you (Must match value in Auth0 Dashboard) |
-| `cookieSecret`           | **String** OR **Array of Strings** | _random UUID_    | See https://github.com/expressjs/session#secret for more info (This is set to a random UUID by default and should normally not need changing)                                |
-| `successRedirect`        | **String**                         | `/`              | A URL to redirect to on successful Authentication                                                                                                                            |
-| `failureRedirect`        | **String**                         | `/auth/failed`   | A URL to redirect to on failed Authentication                                                                                                                                |
-| `serializeUser`          | **Function**                       | `null`           | A function to use for serialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                               |
-| `deserializeUser`        | **Function**                       | `null`           | A function to use for deserialising users (see [passportjs documentation](http://passportjs.org/docs/configure))                                                             |
-| `useDefaultFailureRoute` | **Boolean**                        | `true`           | Whether the library should automatically provide a failure route handler or not                                                                                              |
-
-Shown here is a full options object with every key populated, but note that each key is optional and will take the default for that argument if not given (many of the default values are recommended over the values provided below, which are just for demonstration).
+#### Import it
 
 ```js
-var options = {
-  auth0: {
-    domain: 'yourdomain.eu.auth0.com',
-    clientID: 'client_id_super_secret',
-    clientSecret: 'client_secret_super_super_secret!',
-    callbackURL: '/callback'
-  },
-  cookieSecret: 'cookiesRkuhl',
-  successRedirect: '/',
-  failureRedirect: '/auth-fail',
-  useDefaultFailureRoute: true
-}
+// ES5
+var expressAuth0Simple = require('express-auth0-simple');
+var passport = require('passport');
+// you might need these middleware aswell
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 ```
+
+```js
+// ES6
+import ExpressAuth0Middleware from 'express-auth0-simple';
+import passport from 'passport';
+// you might need these middleware aswell
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+```
+
+### Configure dependent middleware
+
+```js
+// register cookie and session middlewares
+app.use(cookieParser());
+app.use(
+  session(
+    {
+      secret: uuid.v4(),
+      resave: false,
+      saveUninitialized: false
+    }
+  )
+);
+// register passportjs middlewares
+app.use(passport.initialize());
+app.use(passport.session());
+```
+
+#### Instantiate it
+Make sure your Auth0 environment variables are set before you do this, or provide the Auth0 config as arguments to the middleware constructor.
+
+```js
+// ES5
+var auth = new expressAuth0Simple.ExpressAuth0Middleware(
+  { callbackURL: '/auth/callback' }
+);
+```
+
+```js
+// ES6
+let auth = new ExpressAuth0Middleware(
+  { callbackURL: '/auth/callback' }
+);
+```
+
+#### Enable it
+Attach the Auth0 callback handler to whatever route you'd like this to be mounted on.
+
+```js
+// this is the login route
+app.get('/auth/callback', auth.authCallbackMiddleware, auth.authCallbackHandler);
+```
+
+#### Protect your stuff
+You can either protect your whole app from unauthenticated access or just specific routes:
+
+```js
+// any additional routes declared below this point require login to access
+app.use(auth.requiresLogin);
+```
+
+_OR_
+
+```js
+// only this route requires login to access
+app.get(
+  '/my-fab-route',
+  auth.requiresLogin,
+  function(req,res) {
+    res.send('This is publicly accessible');
+  }
+);
+```
+
+### Logout
+You can log out an authenticated user during any request by calling `req.logout()`
+
+### Additional Config
+The middleware constructor also supports a second argument, which if provided should be an object with either of the following keys:
+
+- `loginPath` - the URL a user goes to to login (this is set to the Auth0 callback URL by default but can be changed if needed). Unauthenticated requests to protected routes will be redirected to this URL, so make sure it's correct if you override it.
+- `failurePath` - the URL a user is redirected to if their authentication attempt fails. This is also set to the Auth0 callback URL by default. Unlike `loginPath`, changing it will not cause any problems as long as the page redirected to is publicly accessible. This can be used for you to show a custom 'forbidden' page.
