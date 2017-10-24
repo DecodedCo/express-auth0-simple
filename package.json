@@ -1,6 +1,6 @@
 {
   "name": "express-auth0-simple",
-  "version": "4.0.0-rc.4",
+  "version": "4.0.0-rc.5",
   "description": "Simple authentication middleware for integrating Auth0 with Express-based applications.",
   "keywords": [
     "express",
